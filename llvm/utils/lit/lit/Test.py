@@ -229,6 +229,10 @@ class Test:
         # The test result, once complete.
         self.result = None
 
+        # For multi-threaded tests
+        self.omp_test = False
+        self.num_threads = 1
+
     def setResult(self, result):
         assert self.result is None, "result already set"
         assert isinstance(result, Result), "unexpected result type"

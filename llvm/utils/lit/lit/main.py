@@ -86,6 +86,18 @@ def main(builtin_params={}):
 
     mark_excluded(discovered_tests, selected_tests)
 
+    if opts.num_threads >= 1:
+        ncpus = lit.util.detectCPUs()
+        if ncpus < opts.num_threads:
+            warning = str('Warning: Number of OpenMP threads selected('
+                       +str(opts.num_threads) + ') exceeds the limit. The '
+                       +'current system has only ' + str(ncpus) + ' available '
+                       +'threads. Consider reducing the number of OMP threads.')
+            sys.stderr.write(warning+'\n')
+            sys.exit(2)
+        lit_config.num_threads = opts.num_threads
+        lit_config.threads_available = opts.num_threads
+
     start = time.time()
     run_tests(selected_tests, lit_config, opts, len(discovered_tests))
     elapsed = time.time() - start

@@ -66,8 +66,9 @@ class Run(object):
                       for k, v in self.lit_config.parallelism_groups.items()
                       if v is not None}
 
+        counter = multiprocessing.Value("i",0)
         pool = multiprocessing.Pool(self.workers, lit.worker.initialize,
-                                    (self.lit_config, semaphores))
+                                    (self.lit_config, semaphores, counter))
 
         async_results = [
             pool.apply_async(lit.worker.execute, args=[test],

@@ -991,6 +991,12 @@ def executeScript(test, litConfig, tmpBase, commands, cwd):
             command = litConfig.valgrindArgs + command
 
     try:
+        # Need to add support for other mutithreading frameworks
+        if test.omp_test:
+            print(test.omp_test, test.num_threads)
+            test.config.environment["OMP_NUM_THREADS"] = str(test.num_threads)
+            test.omp_test = False
+
         out, err, exitCode = lit.util.executeCommand(command, cwd=cwd,
                                        env=test.config.environment,
                                        timeout=litConfig.maxIndividualTestTime)
