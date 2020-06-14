@@ -991,6 +991,11 @@ def executeScript(test, litConfig, tmpBase, commands, cwd):
             command = litConfig.valgrindArgs + command
 
     try:
+        #Add OMP_NUM_THREADS to environment if specified in LIT options
+        if litConfig.omp_threads > 1:
+            print("OMP_THREADS=",litConfig.omp_threads)
+        test.config.environment["OMP_NUM_THREADS"] = str(litConfig.omp_threads)
+
         out, err, exitCode = lit.util.executeCommand(command, cwd=cwd,
                                        env=test.config.environment,
                                        timeout=litConfig.maxIndividualTestTime)

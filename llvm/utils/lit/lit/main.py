@@ -86,6 +86,9 @@ def main(builtin_params={}):
 
     mark_excluded(discovered_tests, selected_tests)
 
+    if opts.omp_threads > 1:
+        lit_config.omp_threads = opts.omp_threads
+
     start = time.time()
     run_tests(selected_tests, lit_config, opts, len(discovered_tests))
     elapsed = time.time() - start

@@ -112,6 +112,12 @@ def parse_args():
     execution_group.add_argument("--allow-empty-runs",
             help="Do not fail the run if all tests are filtered out",
             action="store_true")
+    execution_group.add_argument("--omp-threads",
+            dest="omp_threads",
+            metavar="omp",
+            help="Set number of OpenMP threads used for testing OpenMP enabled tests",
+            type=_positive_int,
+            default=1)
 
     selection_group = parser.add_argument_group("Test Selection")
     selection_group.add_argument("--max-tests",
