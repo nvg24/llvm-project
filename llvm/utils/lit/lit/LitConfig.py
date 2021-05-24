@@ -67,7 +67,9 @@ class LitConfig(object):
         self.parallelism_groups = parallelism_groups
         self.echo_all_commands = echo_all_commands
 
-        self.omp_threads = 1
+        self.num_threads = 0
+        self.threads_available = lit.util.detectCPUs()
+        self.thread_counter = None
 
     @property
     def maxIndividualTestTime(self):

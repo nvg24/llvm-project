@@ -17,12 +17,13 @@ import lit.util
 _lit_config = None
 _parallelism_semaphores = None
 
-
-def initialize(lit_config, parallelism_semaphores):
+def initialize(lit_config, parallelism_semaphores, counter):
     """Copy data shared by all test executions into worker processes"""
     global _lit_config
     global _parallelism_semaphores
     _lit_config = lit_config
+    _lit_config.thread_counter = counter
+    _lit_config.thread_counter.value = _lit_config.threads_available
     _parallelism_semaphores = parallelism_semaphores
 
     # We use the following strategy for dealing with Ctrl+C/KeyboardInterrupt in
